@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Approval | Relief Tracker</title>
+    <link rel="icon" href="images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #4895ef;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-dark: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('images/Background.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            color: var(--light);
+            padding: 20px;
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px auto;
+            box-shadow: 0 15px 35px var(--glass-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-align: center;
+            background: linear-gradient(to right, var(--light), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .filter-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .status-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .requests-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .requests-table th, .requests-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .requests-table th {
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+            position: sticky;
+            top: 0;
+        }
+
+        .requests-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .requests-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .status-approved {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+
+        .status-rejected {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: none;
+        }
+
+        .btn-approve {
+            background: linear-gradient(135deg, #28a745, #218838);
+            color: white;
+        }
+
+        .btn-reject {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .btn-view {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .no-requests {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.7;
+        }
+
+        .item-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .item-chip {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .requests-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .action-btns {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-clipboard-check"></i> Request Approval</h2>
+        
+        <div class="filter-controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search requests...">
+            </div>
+            
+            <div class="status-filter">
+                <button class="filter-btn active" data-status="all">
+                    <i class="fas fa-list"></i> All
+                </button>
+                <button class="filter-btn" data-status="pending">
+                    <i class="fas fa-clock"></i> Pending
+                </button>
+                <button class="filter-btn" data-status="approved">
+                    <i class="fas fa-check-circle"></i> Approved
+                </button>
+                <button class="filter-btn" data-status="rejected">
+                    <i class="fas fa-times-circle"></i> Rejected
+                </button>
+            </div>
+        </div>
+        
+        <table class="requests-table">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Camp</th>
+                    <th>Items</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="requestsBody">
+                <!-- Requests will be loaded here -->
+            </tbody>
+        </table>
+        
+        <div id="noRequests" class="no-requests">
+            <i class="fas fa-inbox" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>No requests found. All caught up!</p>
+        </div>
+    </div>
+
+    <!-- Rejection Reason Modal -->
+    <div class="modal" id="rejectModal">
+        <div class="modal-content">
+            <h3><i class="fas fa-times-circle"></i> Reject Request</h3>
+            <p id="modalRequestInfo"></p>
+            <textarea id="rejectionReason" placeholder="Please specify the reason for rejection..." 
+                      style="width:100%; padding:10px; margin:15px 0; border-radius:8px; min-height:100px;"></textarea>
+            <div class="modal-actions">
+                <button class="btn btn-reject" onclick="confirmRejection()">
+                    <i class="fas fa-times"></i> Confirm Rejection
+                </button>
+                <button class="btn btn-view" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current request being processed
+        let currentRequestId = null;
+        
+        // Load requests from localStorage
+        function getRequests() {
+            return JSON.parse(localStorage.getItem('reliefRequests')) || [];
+        }
+        
+        // Save requests to localStorage
+        function saveRequests(requests) {
+            localStorage.setItem('reliefRequests', JSON.stringify(requests));
+        }
+        
+        // Render requests table
+        function renderRequests(requests) {
+            const tbody = document.getElementById('requestsBody');
+            const noRequests = document.getElementById('noRequests');
+            
+            if (requests.length === 0) {
+                tbody.innerHTML = '';
+                noRequests.style.display = 'block';
+                return;
+            }
+            
+            noRequests.style.display = 'none';
+            tbody.innerHTML = requests.map(req => {
+                const statusBadge = req.status === 'pending' ? 
+                    `<span class="status-badge status-pending"><i class="fas fa-clock"></i> Pending</span>` :
+                    req.status === 'approved' ? 
+                    `<span class="status-badge status-approved"><i class="fas fa-check-circle"></i> Approved</span>` :
+                    `<span class="status-badge status-rejected"><i class="fas fa-times-circle"></i> Rejected</span>`;
+                
+                const itemsList = req.items.map(item => 
+                    `<div class="item-chip"><i class="fas fa-${getItemIcon(item.name)}"></i> ${item.name} (${item.quantity})</div>`
+                ).join('');
+                
+                const actions = req.status === 'pending' ? `
+                    <div class="action-btns">
+                        <button class="btn btn-approve" onclick="approveRequest('${req.id}')">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                        <button class="btn btn-reject" onclick="showRejectModal('${req.id}')">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                        <button class="btn btn-view" onclick="viewRequestDetails('${req.id}')">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                    </div>
+                ` : `
+                    <div class="action-btns">
+                        <button class="btn btn-view" onclick="viewRequestDetails('${req.id}')">
+                            <i class="fas fa-eye"></i> Details
+                        </button>
+                    </div>
+                `;
+                
+                return `
+                    <tr>
+                        <td>${req.id}</td>
+                        <td>${req.camp}</td>
+                        <td><div class="item-list">${itemsList}</div></td>
+                        <td>${statusBadge}</td>
+                        <td>${actions}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Approve request
+        function approveRequest(requestId) {
+            const requests = getRequests();
+            const request = requests.find(req => req.id === requestId);
+            
+            if (request) {
+                request.status = 'approved';
+                request.eta = calculateETA(request.camp);
+                saveRequests(requests);
+                renderRequests(requests);
+                showAlert(`Request ${requestId} approved! ETA: ${request.eta}`, 'success');
+            }
+        }
+        
+        // Show reject modal
+        function showRejectModal(requestId) {
+            const requests = getRequests();
+            const request = requests.find(req => req.id === requestId);
+            
+            if (request) {
+                currentRequestId = requestId;
+                document.getElementById('modalRequestInfo').innerHTML = `
+                    <p><strong>Camp:</strong> ${request.camp}</p>
+                    <p><strong>Items:</strong> ${request.items.map(i => `${i.name} (${i.quantity})`).join(', ')}</p>
+                `;
+                document.getElementById('rejectModal').style.display = 'flex';
+            }
+        }
+        
+        // Confirm rejection
+        function confirmRejection() {
+            const reason = document.getElementById('rejectionReason').value.trim();
+            
+            if (!reason) {
+                alert('Please provide a reason for rejection');
+                return;
+            }
+            
+            const requests = getRequests();
+            const request = requests.find(req => req.id === currentRequestId);
+            
+            if (request) {
+                request.status = 'rejected';
+                request.rejectionReason = reason;
+                saveRequests(requests);
+                renderRequests(requests);
+                closeModal();
+                showAlert(`Request ${currentRequestId} rejected`, 'success');
+            }
+        }
+        
+        // Close modal
+        function closeModal() {
+            document.getElementById('rejectModal').style.display = 'none';
+            document.getElementById('rejectionReason').value = '';
+            currentRequestId = null;
+        }
+        
+        // View request details
+        function viewRequestDetails(requestId) {
+            const requests = getRequests();
+            const request = requests.find(req => req.id === requestId);
+            
+            if (request) {
+                let details = `
+                    <h3>Request #${request.id}</h3>
+                    <p><strong>Camp:</strong> ${request.camp}</p>
+                    <p><strong>Submitted:</strong> ${new Date(request.date).toLocaleString()}</p>
+                    <p><strong>Status:</strong> ${request.status.charAt(0).toUpperCase() + request.status.slice(1)}</p>
+                    
+                    <h4>Requested Items:</h4>
+                    <ul>
+                        ${request.items.map(item => `<li>${item.name} (${item.quantity} units)</li>`).join('')}
+                    </ul>
+                `;
+                
+                if (request.status === 'approved') {
+                    details += `<p><strong>Estimated Delivery:</strong> ${request.eta || 'Not specified'}</p>`;
+                }
+                
+                if (request.status === 'rejected' && request.rejectionReason) {
+                    details += `<p><strong>Rejection Reason:</strong> ${request.rejectionReason}</p>`;
+                }
+                
+                alert(details);
+            }
+        }
+        
+        // Calculate ETA (mock function)
+        function calculateETA(campName) {
+            const campETAs = {
+                "Camp 1": "2 hours",
+                "Camp 2": "4 hours",
+                "Camp 3": "6 hours"
+            };
+            return campETAs[campName] || "24 hours";
+        }
+        
+        // Get icon for items
+        function getItemIcon(itemName) {
+            const icons = {
+                'Blankets': 'blanket',
+                'Jackets': 'hoodie',
+                'Medicines': 'pills',
+                'Tents': 'campground'
+                // Add more as needed
+            };
+            return icons[itemName] || 'box';
+        }
+        
+        // Show alert
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+            
+            alert.style.position = 'fixed';
+            alert.style.top = '20px';
+            alert.style.right = '20px';
+            alert.style.padding = '15px 20px';
+            alert.style.background = type === 'success' ? 'rgba(76,201,240,0.9)' : 'rgba(248,37,133,0.9)';
+            alert.style.color = 'white';
+            alert.style.borderRadius = '10px';
+            alert.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+            alert.style.zIndex = '1000';
+            alert.style.animation = 'fadeIn 0.3s ease-out';
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => alert.remove(), 300);
+            }, 3000);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            const requests = getRequests();
+            renderRequests(requests);
+            
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = requests.filter(req => 
+                    req.id.toLowerCase().includes(term) || 
+                    req.camp.toLowerCase().includes(term)
+                );
+                renderRequests(filtered);
+            });
+            
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const status = btn.dataset.status;
+                    const filtered = status === 'all' ? 
+                        requests : 
+                        requests.filter(req => req.status === status);
+                    
+                    renderRequests(filtered);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Camp | Relief Tracker</title>
+    <link rel="icon" href="images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #4895ef;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-dark: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('images/Background.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            color: var(--light);
+            padding: 20px;
+            position: relative;
+        }
+
+        .logo-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .logo-left:hover {
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--light);
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 100;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--secondary);
+        }
+
+        .dashboard {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 95%;
+            max-width: 1000px;
+            margin: 80px auto 30px;
+            box-shadow: 0 15px 35px var(--glass-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+            background: linear-gradient(to right, var(--light), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .view-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .camp-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .camp-option {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .camp-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary);
+        }
+
+        .camp-number {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .camp-name {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .camp-info {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .camp-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .map-container {
+            height: 400px;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: var(--light);
+            text-decoration: none;
+            transition: 0.3s;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .status-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: 25px 15px;
+                margin-top: 70px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .camp-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-left, .back-button {
+                width: 80px;
+                top: 15px;
+            }
+            
+            .back-button {
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="images/Logo.png" alt="Relief Tracker Logo" class="logo-left">
+    <a href="home.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+
+    <div class="dashboard">
+        <h2><i class="fas fa-map-marked-alt"></i> Select Relief Camp</h2>
+        
+        <div class="view-toggle">
+            <button class="toggle-btn active" id="gridViewBtn"><i class="fas fa-th"></i> Grid View</button>
+            <button class="toggle-btn" id="mapViewBtn"><i class="fas fa-map"></i> Map View</button>
+        </div>
+        
+        <div class="camp-options" id="campGrid">
+            <!-- Camp 1 -->
+            <div class="camp-option" onclick="navigateToRequest(1)" data-lat="27.7172" data-lng="85.3240">
+                <div class="camp-status status-medium"></div>
+                <div class="camp-number">01</div>
+                <div class="camp-name">Kathmandu Central Camp</div>
+                <div class="camp-info">
+                    <span><i class="fas fa-users"></i> 142 evacuees</span>
+                    <span><i class="fas fa-exclamation-circle"></i> Moderate supplies</span>
+                    <span><i class="fas fa-map-marker-alt"></i> Kathmandu Valley</span>
+                </div>
+            </div>
+            
+            <!-- Camp 2 -->
+            <div class="camp-option" onclick="navigateToRequest(2)" data-lat="27.6778" data-lng="85.3215">
+                <div class="camp-status status-high"></div>
+                <div class="camp-number">02</div>
+                <div class="camp-name">Patan Relief Center</div>
+                <div class="camp-info">
+                    <span><i class="fas fa-users"></i> 89 evacuees</span>
+                    <span><i class="fas fa-check-circle"></i> Adequate supplies</span>
+                    <span><i class="fas fa-map-marker-alt"></i> Lalitpur District</span>
+                </div>
+            </div>
+            
+            <!-- Camp 3 -->
+            <div class="camp-option" onclick="navigateToRequest(3)" data-lat="27.7058" data-lng="85.3147">
+                <div class="camp-status status-low"></div>
+                <div class="camp-number">03</div>
+                <div class="camp-name">Bhaktapur Shelter</div>
+                <div class="camp-info">
+                    <span><i class="fas fa-users"></i> 210 evacuees</span>
+                    <span><i class="fas fa-exclamation-triangle"></i> Critical needs</span>
+                    <span><i class="fas fa-map-marker-alt"></i> Bhaktapur Area</span>
+                </div>
+            </div>
+        </div>
+        
+        <a href="status.html" class="status-link">
+            <i class="fas fa-clipboard-list"></i> Check Existing Request Status
+        </a>
+    </div>
+
+    <script>
+        // View toggle functionality
+        document.getElementById('mapViewBtn').addEventListener('click', function() {
+            alert("Map view would display camp locations in a real implementation");
+            // Actual map implementation would go here
+        });
+
+        function navigateToRequest(campNumber) {
+            // Store selected camp in sessionStorage
+            sessionStorage.setItem('selectedCamp', campNumber);
+            window.location.href = `request.html?camp=${campNumber}`;
+        }
+    </script>
+</body>
+</html>

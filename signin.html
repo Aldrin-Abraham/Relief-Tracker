@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Sign In - Relief Tracker">
+    <title>Relief Tracker | Admin Sign In</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --error: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-dark: rgba(0, 0, 0, 0.3);
+            --input-bg: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('images/Background.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            padding: 20px;
+            position: relative;
+        }
+
+        .logo-left {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-left:hover {
+            transform: scale(1.05);
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 15px 35px var(--glass-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+            background: linear-gradient(to right, var(--light), #4cc9f0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 14px 14px 40px;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.3);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .logo-left {
+                width: 80px;
+                top: 15px;
+                left: 15px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+                margin-bottom: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="images/Logo.png" alt="Relief Tracker Logo" class="logo-left">
+
+    <div class="container">
+        <h2><i class="fas fa-user-shield"></i> Admin Portal</h2>
+        
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="username" name="username" required 
+                       placeholder="Enter admin username" autocomplete="username">
+            </div>
+            
+            <div class="input-group password-container">
+                <label for="password">Password</label>
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="password" name="password" required 
+                       placeholder="Enter your password" autocomplete="current-password">
+                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+            </div>
+            
+            <p class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i> Invalid credentials! Please try again.
+            </p>
+            
+            <button type="submit" id="loginButton">
+                <i class="fas fa-sign-in-alt"></i> Sign In
+            </button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2023 Relief Tracker | Secure Admin Portal
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('loginButton');
+            
+            // Toggle password visibility
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePassword.classList.toggle('fa-eye');
+                togglePassword.classList.toggle('fa-eye-slash');
+            });
+            
+            // Form submission
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value;
+                
+                // Show loading state
+                loginButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+                loginButton.disabled = true;
+                
+                // Simulate network delay (remove in production)
+                await new Promise(resolve => setTimeout(resolve, 800));
+                
+                // Basic credential validation (replace with actual auth in production)
+                if (username === "admin" && password === "official") {
+                    // Successful login
+                    loginButton.innerHTML = '<i class="fas fa-check"></i> Login Successful!';
+                    loginButton.style.background = 'linear-gradient(135deg, #4cc9f0, #4895ef)';
+                    
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = "admin.html";
+                    }, 500);
+                } else {
+                    // Failed login
+                    errorMessage.style.display = 'block';
+                    loginButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                    loginButton.disabled = false;
+                    
+                    // Shake animation for error
+                    form.style.animation = 'shake 0.5s ease';
+                    setTimeout(() => {
+                        form.style.animation = '';
+                    }, 500);
+                }
+            });
+            
+            // Clear error when typing
+            document.getElementById('username').addEventListener('input', () => {
+                errorMessage.style.display = 'none';
+            });
+            
+            document.getElementById('password').addEventListener('input', () => {
+                errorMessage.style.display = 'none';
+            });
+            
+            // Rate limiting for login attempts
+            let loginAttempts = 0;
+            const maxAttempts = 5;
+            
+            // In a real app, you would implement proper rate limiting on the server side
+        });
+    </script>
+</body>
+</html>

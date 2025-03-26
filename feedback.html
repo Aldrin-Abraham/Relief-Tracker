@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relief Tracker | Feedback</title>
+    <!-- Same CSS as status.html -->
+    <style>
+        .rating {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .rating input { display: none; }
+        .rating label {
+            font-size: 2rem;
+            color: #ccc;
+            cursor: pointer;
+        }
+        .rating input:checked ~ label { color: #ffc107; }
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="status.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Status
+        </a>
+        <h1><i class="fas fa-comment-alt"></i> Delivery Feedback</h1>
+        
+        <form id="feedbackForm">
+            <p><strong>Request ID:</strong> REQ-1001</p>
+            <p><strong>Items Received:</strong> Blankets (10), Jackets (5)</p>
+            
+            <div class="rating">
+                <p>Rate this delivery:</p>
+                ★★★★★
+                <!-- Hidden radio inputs for 1-5 stars -->
+            </div>
+            
+            <textarea placeholder="Any issues or comments?"></textarea>
+            
+            <button type="submit" class="btn btn-track" style="width:100%">
+                <i class="fas fa-paper-plane"></i> Submit Feedback
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your feedback!');
+            window.location.href = 'status.html';
+        });
+    </script>
+</body>
+</html>

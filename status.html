@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relief Tracker | Request Status</title>
+    <link rel="icon" href="images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/Background.jpg') no-repeat center center/cover;
+            min-height: 100vh;
+            color: var(--light);
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .search-box {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: 30px;
+            border: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .status-card {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--status-color, #4361ee);
+        }
+        .status-card h3 {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            background: var(--status-bg, rgba(67,97,238,0.2));
+            color: var(--status-color);
+        }
+        .eta {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        .btn-track {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-notify {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="camp.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Camps
+        </a>
+        <h1><i class="fas fa-clipboard-list"></i> Request Status</h1>
+        
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search by Request ID or Camp Name...">
+        </div>
+        
+        <div id="statusResults">
+            <!-- Dynamic content will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample data - in real app, fetch from localStorage/API
+        const requests = [
+            {
+                id: "REQ-1001",
+                camp: "Camp 1 - Kathmandu Central",
+                items: "Blankets (10), Jackets (5)",
+                status: "approved",
+                date: "2023-06-15",
+                eta: "2023-06-20T14:00:00",
+                contact: "camp1@example.com"
+            },
+            {
+                id: "REQ-1002",
+                camp: "Camp 2 - Patan Relief",
+                items: "Medicines (20), Bandages (15)",
+                status: "pending",
+                date: "2023-06-16",
+                eta: null,
+                contact: "camp2@example.com"
+            }
+        ];
+
+        // Load requests on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRequests(requests);
+            
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = requests.filter(req => 
+                    req.id.toLowerCase().includes(term) || 
+                    req.camp.toLowerCase().includes(term)
+                );
+                renderRequests(filtered);
+            });
+        });
+
+        function renderRequests(requests) {
+            const container = document.getElementById('statusResults');
+            
+            if (requests.length === 0) {
+                container.innerHTML = `<p style="text-align:center">No requests found.</p>`;
+                return;
+            }
+            
+            container.innerHTML = requests.map(req => {
+                const statusColors = {
+                    'approved': { bg: 'rgba(76,201,240,0.2)', color: '#4cc9f0' },
+                    'pending': { bg: 'rgba(248,150,30,0.2)', color: '#f8961e' },
+                    'rejected': { bg: 'rgba(247,37,133,0.2)', color: '#f72585' }
+                };
+                
+                const statusText = req.status.charAt(0).toUpperCase() + req.status.slice(1);
+                const etaText = req.eta ? 
+                    new Date(req.eta).toLocaleString() : 
+                    'Will be updated after approval';
+                
+                return `
+                    <div class="status-card" style="--status-color: ${statusColors[req.status].color}; --status-bg: ${statusColors[req.status].bg}">
+                        <h3>
+                            <span class="status-badge">${statusText}</span>
+                            ${req.id}
+                        </h3>
+                        <p><strong>Camp:</strong> ${req.camp}</p>
+                        <p><strong>Items:</strong> ${req.items}</p>
+                        <p><strong>Submitted:</strong> ${new Date(req.date).toLocaleDateString()}</p>
+                        
+                        <div class="eta">
+                            <i class="fas fa-clock"></i>
+                            <strong>Estimated Delivery:</strong> ${etaText}
+                        </div>
+                        
+                        <div class="actions">
+                            <button class="btn btn-track" onclick="trackDelivery('${req.id}')">
+                                <i class="fas fa-map-marked-alt"></i> Track
+                            </button>
+                            <button class="btn btn-notify" onclick="setupNotifications('${req.contact}')">
+                                <i class="fas fa-bell"></i> Notify Me
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function trackDelivery(requestId) {
+            alert(`Tracking for ${requestId} would open in a real app`);
+            // In real app: window.location.href = `delivery.html?request=${requestId}`;
+        }
+
+        function setupNotifications(email) {
+            const channel = prompt("Get notifications via: (1) Email or (2) SMS", "1");
+            if (channel === "1") {
+                alert(`Notification alerts will be sent to ${email}`);
+            } else if (channel === "2") {
+                const phone = prompt("Enter your phone number:");
+                if (phone) alert(`SMS alerts will be sent to ${phone}`);
+            }
+        }
+    </script>
+</body>
+</html>
