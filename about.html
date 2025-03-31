@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Relief Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --secondary: #4895ef;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-dark: rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('../images/Background.jpg') no-repeat center center/cover fixed;
+            color: var(--light);
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--secondary), var(--success));
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(var(--success), var(--secondary));
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            width: 80px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 100px auto 50px;
+            box-shadow: 0 15px 35px var(--glass-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--light), var(--success));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, var(--secondary), var(--success));
+            border-radius: 3px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 30px 0 15px;
+            color: var(--secondary);
+            position: relative;
+            padding-left: 15px;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 70%;
+            width: 5px;
+            background: var(--success);
+            border-radius: 5px;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .mission-statement {
+            font-style: italic;
+            background: rgba(72, 149, 239, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+            margin: 25px 0;
+            transform: perspective(1000px) rotateX(1deg);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .mission-statement:hover {
+            transform: perspective(1000px) rotateX(0deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .team-member {
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--secondary);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-member:hover .member-photo {
+            border-color: var(--success);
+            box-shadow: 0 15px 30px rgba(76, 201, 240, 0.3);
+        }
+
+        .member-name {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            color: var(--success);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            margin-top: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer a {
+            color: var(--success);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 80px auto 30px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <a href="home.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+        <img src="../images/Logo.png" alt="Relief Tracker Logo" class="logo">
+        <div style="width: 60px;"></div> <!-- Spacer for balance -->
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1><i class="fas fa-heart"></i> About Relief Tracker</h1>
+        
+        <p>Founded in 2025, Relief Tracker is a disaster management platform dedicated to connecting resources with those in need during humanitarian crises. Our technology bridges the gap between relief organizations, volunteers, and affected communities.</p>
+        
+        <div class="mission-statement">
+            <p>"To revolutionize disaster response through real-time coordination, ensuring no call for help goes unanswered when every second counts."</p>
+        </div>
+        
+        <h2><i class="fas fa-chart-line"></i> Our Impact</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">48+</div>
+                <div class="stat-label">Disaster Responses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5,200+</div>
+                <div class="stat-label">Volunteers Mobilized</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">92%</div>
+                <div class="stat-label">Response Rate Under 2 Hours</div>
+            </div>
+        </div>
+        
+        <h2><i class="fas fa-lightbulb"></i> How We Work</h2>
+        <p>Relief Tracker combines cutting-edge geospatial technology with a network of verified responders to:</p>
+        <ul style="line-height: 1.8; margin-left: 20px; margin-bottom: 20px;">
+            <li>Pinpoint disaster-affected areas in real-time</li>
+            <li>Match resources with specific community needs</li>
+            <li>Coordinate multi-agency response efforts</li>
+            <li>Provide transparent tracking of aid distribution</li>
+        </ul>
+        
+        <h2><i class="fas fa-users"></i> Our Team</h2>
+        
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="../images/team1.jpg" alt="Dr. Sarah Chen" class="member-photo">
+                <div class="member-name">Dr. Sarah Chen</div>
+                <div class="member-role">Founder & Disaster Response Specialist</div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="team-member">
+                <img src="../images/team2.jpg" alt="James Rodriguez" class="member-photo">
+                <div class="member-name">James Rodriguez</div>
+                <div class="member-role">Technology Director</div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="team-member">
+                <img src="../images/team3.jpg" alt="Amina Diallo" class="member-photo">
+                <div class="member-name">Amina Diallo</div>
+                <div class="member-role">Field Operations Coordinator</div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <h2><i class="fas fa-hands-helping"></i> Partners</h2>
+        <p>We collaborate with international organizations including:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 30px 0;">
+            <img src="../images/UN Logo.png" alt="UN Logo" style="height: 60px; opacity: 0.8; transition: all 0.3s ease;" class="partner-logo">
+            <img src="../images/Red Cross Logo.png" alt="Red Cross" style="height: 60px; opacity: 0.8; transition: all 0.3s ease;" class="partner-logo">
+            <img src="../images/DWB Logo.png" alt="Doctors Without Borders" style="height: 60px; opacity: 0.8; transition: all 0.3s ease;" class="partner-logo">
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Relief Tracker | Disaster Management System | <a href="privacy.html">Privacy Policy</a>
+    </footer>
+
+    <script>
+        // Add hover effect to partner logos
+        document.querySelectorAll('.partner-logo').forEach(logo => {
+            logo.addEventListener('mouseover', () => {
+                logo.style.opacity = '1';
+                logo.style.transform = 'scale(1.1)';
+            });
+            logo.addEventListener('mouseout', () => {
+                logo.style.opacity = '0.8';
+                logo.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add smooth fade-in for elements as they scroll into view
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card, .team-member, .mission-statement').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
