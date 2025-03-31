@@ -24,6 +24,8 @@
             --dark: #212529;
             --success: #4cc9f0;
             --warning: #f72585;
+            --emergency: #e63946;
+            --emergency-dark: #d00000;
             --glass: rgba(255, 255, 255, 0.15);
             --glass-dark: rgba(0, 0, 0, 0.2);
         }
@@ -50,16 +52,79 @@
             overflow-x: hidden;
         }
 
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 200;
+        }
+
         .logo-left {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 100px;
+            width: 80px;
             transition: transform 0.3s ease;
         }
 
         .logo-left:hover {
             transform: scale(1.05);
+        }
+
+        /* Emergency Button Styles */
+        .emergency-contact {
+            background: linear-gradient(135deg, var(--emergency), var(--emergency-dark));
+            color: white;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+
+        .emergency-contact::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 2px solid var(--emergency);
+            border-radius: 60px;
+            animation: pulse 2s infinite;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 0; }
+        }
+
+        .emergency-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            margin-left: 6px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .container {
@@ -75,6 +140,7 @@
             transform: translateY(0);
             transition: transform 0.5s ease, box-shadow 0.5s ease;
             animation: fadeInUp 0.8s ease-out;
+            margin-top: 80px;
         }
 
         .container:hover {
@@ -92,17 +158,25 @@
             color: transparent;
         }
 
-        p {
+        .tagline {
             font-size: clamp(0.9rem, 3vw, 1.1rem);
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             line-height: 1.6;
             opacity: 0.9;
+        }
+
+        .description {
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            margin-bottom: 30px;
+            line-height: 1.6;
+            opacity: 0.8;
         }
 
         .buttons {
             display: flex;
             flex-direction: column;
             gap: 15px;
+            margin-bottom: 20px;
         }
 
         .btn {
@@ -153,11 +227,144 @@
             font-size: 1.2rem;
         }
 
-        footer {
-            position: absolute;
-            bottom: 20px;
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .quick-link {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .quick-link:hover {
+            color: var(--success);
+            text-decoration: underline;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            z-index: 100;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Emergency Modal Styles */
+        .emergency-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .emergency-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .emergency-modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .call-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .status-connecting {
+            background: rgba(255, 209, 102, 0.2);
+            color: var(--dark);
+        }
+
+        .status-connected {
+            background: rgba(46, 125, 50, 0.2);
+            color: #2e7d32;
+        }
+
+        .emergency-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .option-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .option-btn i {
+            font-size: 1.2rem;
         }
 
         @keyframes fadeInUp {
@@ -174,12 +381,16 @@
         @media (max-width: 768px) {
             .container {
                 padding: 30px 20px;
+                margin-top: 70px;
             }
             
             .logo-left {
-                width: 80px;
-                top: 15px;
-                left: 15px;
+                width: 70px;
+            }
+
+            .emergency-contact {
+                font-size: 0.8rem;
+                padding: 8px 15px;
             }
             
             .btn {
@@ -188,6 +399,11 @@
         }
 
         @media (max-width: 480px) {
+            .top-bar {
+                height: 50px;
+                padding: 0 15px;
+            }
+            
             .buttons {
                 gap: 12px;
             }
@@ -195,52 +411,195 @@
             .btn i {
                 font-size: 1rem;
             }
+
+            .emergency-options {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 25px 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <img src="images/Logo.png" alt="Relief Tracker Logo" class="logo-left">
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <img src="images/Logo.png" alt="Relief Tracker Logo" class="logo-left">
+        <a href="tel:+11234567890" id="emergencyBtn" class="emergency-contact">
+            <i class="fas fa-phone-alt"></i>
+            <span class="visible-label">EMERGENCY</span>
+            <span id="callStatusBadge" class="status-badge">
+                <i class="fas fa-circle"></i> LIVE
+            </span>
+        </a>
+    </div>
 
+    <!-- Main Content -->
     <div class="container">
         <h1>Welcome to Relief Tracker</h1>
-        <p>Streamlining disaster relief management with real-time tracking and efficient resource allocation for those in need.</p>
+        <p class="tagline">Streamlining disaster relief management with real-time tracking</p>
+        <p class="description">
+            Efficient resource allocation for those in need during crisis situations.
+        </p>
         
         <div class="buttons">
             <a href="signin.html" class="btn">
-                <i class="fas fa-user-shield"></i> Admin Sign In
+                <i class="fas fa-users-gear"></i> 
+                Relief Team Login
             </a>
             <a href="camp.html" class="btn btn-track">
-                <i class="fas fa-map-marked-alt"></i> Track Relief
+                <i class="fas fa-circle-exclamation"></i> <!-- Emergency alert icon -->
+                Request Assistance
             </a>
+        </div>
+
+        <div class="quick-links">
+            <a href="about.html" class="quick-link">About Us</a>
+            <a href="volunteer.html" class="quick-link">Volunteer</a>
+            <a href="donate.html" class="quick-link">Donate</a>
+            <a href="safety.html" class="quick-link">Safety Tips</a>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="emergency-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            
+            <h2><i class="fas fa-exclamation-triangle" style="color: var(--emergency);"></i> Emergency Assistance</h2>
+            
+            <div id="callStatus" class="call-status status-connecting">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Connecting to emergency services...</span>
+            </div>
+            
+            <div class="emergency-number-display" style="font-size: 1.5rem; margin: 20px 0;">
+                <i class="fas fa-phone"></i> +1 (123) 456-7890
+            </div>
+            
+            <div class="emergency-options">
+                <button id="callNowBtn" class="option-btn" style="grid-column: span 2; background: var(--emergency); color: white;">
+                    <i class="fas fa-phone"></i> CALL NOW
+                </button>
+                
+                <button id="requestCallbackBtn" class="option-btn">
+                    <i class="fas fa-phone-volume"></i> Request Callback
+                </button>
+                
+                <button id="smsHelpBtn" class="option-btn">
+                    <i class="fas fa-sms"></i> Text HELP
+                </button>
+                
+                <button id="whatsappBtn" class="option-btn">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </button>
+                
+                <button id="local911Btn" class="option-btn" style="grid-column: span 2; background: #f8f9fa;">
+                    <i class="fas fa-ambulance"></i> Find Local Emergency Number
+                </button>
+            </div>
+            
+            <p style="margin-top: 20px; font-size: 0.8em; color: #666;">
+                <i class="fas fa-info-circle"></i> For immediate life-threatening emergencies, call local 911 first.
+            </p>
         </div>
     </div>
 
     <footer>
-        &copy; 2023 Relief Tracker | Disaster Management System
+        <div class="footer-links">
+            <a href="privacy.html" class="quick-link">Privacy Policy</a>
+            <a href="terms.html" class="quick-link">Terms of Service</a>
+            <a href="contact.html" class="quick-link">Contact Us</a>
+        </div>
+        <div>&copy; 2025 Relief Tracker | Disaster Management System</div>
     </footer>
 
     <script>
-        // Add interactive effects
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add click animation to buttons
-            const buttons = document.querySelectorAll('.btn');
-            
-            buttons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.target.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        e.target.style.transform = '';
-                    }, 200);
-                });
-            });
-            
-            // Preload next pages for better performance
-            const links = ['signin.html', 'camp.html'];
-            links.forEach(link => {
-                const preloadLink = document.createElement('link');
-                preloadLink.rel = 'prefetch';
-                preloadLink.href = link;
-                document.head.appendChild(preloadLink);
+        // DOM Elements
+        const emergencyBtn = document.getElementById('emergencyBtn');
+        const emergencyModal = document.getElementById('emergencyModal');
+        const closeModal = document.getElementById('closeModal');
+        const callStatus = document.getElementById('callStatus');
+        const callNowBtn = document.getElementById('callNowBtn');
+        
+        // Device detection
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        // Emergency Button Click Handler
+        emergencyBtn.addEventListener('click', function(e) {
+            if(isMobile) {
+                // On mobile, let default tel: link handle the call
+                return true;
+            } else {
+                // On desktop, show modal
+                e.preventDefault();
+                emergencyModal.classList.add('active');
+                
+                // Simulate connection status
+                setTimeout(() => {
+                    callStatus.innerHTML = `
+                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                        <span>Emergency line ready - call now or choose another option</span>
+                    `;
+                    callStatus.className = 'call-status status-connected';
+                }, 1500);
+            }
+        });
+        
+        // Close Modal
+        closeModal.addEventListener('click', function() {
+            emergencyModal.classList.remove('active');
+        });
+        
+        // Call Now Button
+        callNowBtn.addEventListener('click', function() {
+            // In production, this would initiate a WebRTC call
+            alert("In production: Would connect to emergency services via WebRTC");
+        });
+        
+        // Other Option Buttons
+        document.getElementById('requestCallbackBtn').addEventListener('click', function() {
+            alert("Callback request would be sent to emergency team");
+        });
+        
+        document.getElementById('smsHelpBtn').addEventListener('click', function() {
+            window.location.href = 'sms:+11234567890?body=HELP';
+        });
+        
+        document.getElementById('whatsappBtn').addEventListener('click', function() {
+            window.open('https://wa.me/11234567890?text=Emergency%20assistance%20needed');
+        });
+        
+        document.getElementById('local911Btn').addEventListener('click', function() {
+            alert("Would show local emergency numbers based on user's location");
+        });
+        
+        // Update Call Status Badge
+        function updateCallStatus() {
+            const statuses = [
+                {text: "LIVE", color: "#4CAF50"},
+                {text: "HIGH VOLUME", color: "#FF9800"},
+                {text: "2 MIN WAIT", color: "#FF9800"}
+            ];
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            document.getElementById('callStatusBadge').innerHTML = `
+                <i class="fas fa-circle" style="color: ${randomStatus.color}; font-size: 0.6em;"></i>
+                ${randomStatus.text}
+            `;
+        }
+        
+        // Initialize status updates every 30 seconds
+        updateCallStatus();
+        setInterval(updateCallStatus, 30000);
+        
+        // Button click animation (existing functionality)
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.target.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    e.target.style.transform = '';
+                }, 200);
             });
         });
     </script>
