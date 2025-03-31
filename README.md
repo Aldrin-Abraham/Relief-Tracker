@@ -1,60 +1,52 @@
-![Disaster](https://github.com/user-attachments/assets/782cbccf-544c-4c80-88b6-301f1320361f)
+![Disaster Management](https://github.com/user-attachments/assets/15a425f6-7e0a-4827-9698-235ea72cefaa)
 
-# ReliefTracker – Disaster Relief Management System 🎯
-ReliefTracker is a web-based application designed to streamline the process of managing disaster relief requests and resources efficiently. It allows users to submit relief requests, track assistance, and enables organizations to manage aid distribution effectively.
+# ReliefTracker – Disaster Relief Management System 🚑🌍
+ReliefTracker is a web-based disaster management platform that connects affected individuals with relief organizations through efficient request tracking and resource allocation.
 
-## Project Overview
-ReliefTracker is a web-based disaster relief management system designed to facilitate the distribution of aid to affected individuals and communities. The system allows users to submit requests for assistance, enables administrators to manage and track these requests, and provides a structured workflow for relief organizations.
+### Project Overview
+ReliefTracker is designed to streamline disaster response by:
+* Providing a public portal for emergency assistance requests (request.html)
+* Offering admin dashboards for real-time monitoring (admin.html)
+* Facilitating volunteer coordination (volunteer.html)
 
-The project is built using Python (Flask) as the backend framework, SQLite for database storage, and HTML/CSS for the user interface, ensuring a lightweight, scalable, and easy-to-use platform. ReliefTracker aims to improve response times, enhance transparency, and streamline disaster relief efforts through an efficient and user-friendly system.
+Built with:
+* Frontend: HTML5, CSS3, JavaScript (Vanilla)
+* Backend: PHP (simulated), MySQL (3NF-compliant)
+* UI: Glassmorphism design for clarity in crisis situations
 
 ## Key Features
-### User Request Management:
-* Users can submit relief requests for essentials such as food, shelter, and medical aid.
-* Requests are stored in a centralized database for efficient tracking.
-* Users can check the status of their requests in real-time.
+### 🌐 User Portal
+* Multi-step emergency request forms (request.html)
+* Real-time request status tracking (status.html)
+* Camp location finder (camp.html)
 
-### Administrator Dashboard:
-* Tracks available resources (e.g., food supplies, medical kits, shelters).
-* Ensures efficient allocation of aid to maximize coverage.
-* Helps prevent overlapping or missing distributions.
+### 🖥️ Admin Dashboard
+* Interactive resource analytics (Chart.js in admin.html)
+* Request approval/rejection workflows (approval.html)
+* Volunteer skill-matching system (volunteer.html)
 
-### Relief Resource Management:
-* Tracks available resources (e.g., food supplies, medical kits, shelters).
-* Ensures efficient allocation of aid to maximize coverage.
-* Helps prevent overlapping or missing distributions.
+### 📊 Database Management
+3NF-normalized MySQL database for:
+* Relief camps
+* Inventory
+* Requests
+* Volunteers
+CRUD operations via PHP simulation
 
-### Volunteer & Organization Coordination:
-* Enables NGOs, government agencies, and volunteers to coordinate efforts.
-* Assigns tasks to volunteers based on real-time needs.
-* Tracks ongoing and completed relief efforts.
+### 🔔 Notification System
+* Status alerts for users
+* Urgent request notifications for admins
 
-### Notification System:
-* Sends alerts and updates to users about their request status.
-* Provides real-time notifications to administrators regarding urgent requests.
+## Screenshots
 
-### Report Generation:
-* Generates detailed reports on relief efforts and resource allocation.
-* Tracks total requests handled, pending cases, and response times.
-* Allows administrators to review and optimize relief strategies.
+![1](https://github.com/user-attachments/assets/7c7fb8c8-16d3-44e5-8391-ea925bb3bb48)
 
-## Implementation Details
-### Database Setup (SQLite) :
-The project uses SQLite to store all data, ensuring a simple and portable solution.
-The database includes several tables:
-users: Stores user details (name, contact, role).
-* requests: Contains relief requests, statuses, and assigned resources.
-* resources: Manages available aid supplies and allocations.
-* volunteers: Stores information about volunteers and their assigned tasks.
+![2](https://github.com/user-attachments/assets/47540b5e-e966-4ba2-8a7e-50f7983469b8)
 
-### Web Interface (Flask + HTML/CSS):
-* Homepage: Provides an overview of the system and its purpose.
-* User Request Page: Allows users to submit and track their requests.
-* Admin Dashboard: Enables administrators to manage and assign requests.
-* Volunteer Page: Displays assigned tasks and relief efforts.
+![3](https://github.com/user-attachments/assets/ca6c2671-fec6-4df9-a403-7d28d64ad2ad)
 
-### Backend Operations (Flask Framework):
-* Handles user authentication and session management.
-* Processes request submissions, approvals, and updates.
-* Manages database interactions for efficient data retrieval and modification.
-* Sends email or SMS notifications for status updates.
+![4](https://github.com/user-attachments/assets/cf115401-75ef-4724-aaf7-a12f2e3c6848)
+
+![5](https://github.com/user-attachments/assets/5c33bc0c-4a0f-4716-8767-16aad4d30360)
+
+![6](https://github.com/user-attachments/assets/a0c6b39f-0bfb-436e-b7c3-a4834d3230ce)
