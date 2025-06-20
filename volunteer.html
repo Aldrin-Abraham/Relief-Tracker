@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Volunteer with Relief Tracker - Join our disaster response team">
+    <title>Volunteer | Relief Tracker</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a0ca3;
+            --primary-light: #4895ef;
+            --secondary: #4cc9f0;
+            --accent: #f72585;
+            --danger: #e63946;
+            --danger-dark: #d00000;
+            --success: #38b000;
+            --warning: #ffaa00;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-gradient), url('images/disaster-bg.jpg') no-repeat center center/cover;
+            color: var(--light);
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-container a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover .logo-img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(to right, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo-container:hover .logo-text {
+            animation: pulseGradient 1.5s infinite;
+        }
+
+        @keyframes pulseGradient {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-light);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: white;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .emergency-btn {
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.4);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emergency-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .emergency-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.6);
+        }
+
+        .emergency-btn:hover::before {
+            left: 100%;
+        }
+
+        .status-badge {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.2rem 0.5rem;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-left: 0.5rem;
+        }
+
+        .main-content {
+            padding: 8rem 2rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, white, var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            font-weight: 400;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .volunteer-section {
+            margin-bottom: 4rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .volunteer-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            color: var(--primary-light);
+        }
+
+        .section-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .section-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .highlight {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .role-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 2rem;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .role-icon {
+            font-size: 2rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .role-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .role-description {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+        }
+
+        .role-requirements {
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .requirements-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .requirements-list {
+            padding-left: 1.5rem;
+        }
+
+        .requirements-list li {
+            margin-bottom: 0.3rem;
+        }
+
+        .google-form-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .google-form-container iframe {
+            width: 100%;
+            border: none;
+            min-height: 500px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(67, 97, 238, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(67, 97, 238, 0.2);
+        }
+
+        .benefit-icon {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            margin-bottom: 1rem;
+        }
+
+        .benefit-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .benefit-description {
+            font-size: 0.9rem;
+            opacity: 0.85;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-question.active::after {
+            content: '-';
+        }
+
+        .faq-answer {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            padding: 2rem;
+            margin-top: auto;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .footer-logo-img {
+            height: 30px;
+        }
+
+        .footer-logo-text {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .footer-description {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-column-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-links-list {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-link a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-link a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .emergency-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .emergency-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 15px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .emergency-modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .modal-title i {
+            color: var(--danger);
+        }
+
+        .call-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-connecting {
+            color: var(--warning);
+        }
+
+        .status-connected {
+            color: var(--success);
+        }
+
+        .emergency-number-display {
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: rgba(230, 57, 70, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(230, 57, 70, 0.3);
+        }
+
+        .emergency-number-display i {
+            color: var(--danger);
+        }
+
+        .emergency-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .option-btn {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            color: white;
+        }
+
+        .option-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .option-btn i {
+            font-size: 1.5rem;
+        }
+
+        .option-btn span {
+            font-size: 0.9rem;
+        }
+
+        .option-btn-primary {
+            grid-column: span 2;
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+        }
+
+        .option-btn-primary:hover {
+            background: linear-gradient(135deg, var(--danger-dark), var(--danger));
+        }
+
+        .modal-note {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .modal-note i {
+            color: var(--warning);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulseGradient {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                padding-top: 7rem;
+            }
+            
+            nav {
+                gap: 1rem;
+            }
+            
+            .emergency-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+            
+            .main-content {
+                padding: 6rem 1.5rem 3rem;
+            }
+            
+            .roles-grid, .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .google-form-container {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .page-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .volunteer-section {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .emergency-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .option-btn-primary {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="logo-container">
+            <a href="index.html">
+                <img src="images/Logo.png" alt="Relief Tracker Logo" class="logo-img">
+                <span class="logo-text">Relief Tracker</span>
+            </a>
+        </div>
+        
+        <nav>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="volunteer.html" class="nav-link active">Volunteer</a>
+            <a href="donate.html" class="nav-link">Donate</a>
+            <a href="resources.html" class="nav-link">Resources</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="tel:+11234567890" id="emergencyBtn" class="emergency-btn">
+                <i class="fas fa-phone-alt"></i>
+                <span class="visible-label">EMERGENCY</span>
+                <span id="callStatusBadge" class="status-badge">
+                    <i class="fas fa-circle"></i> LIVE
+                </span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header animate__animated animate__fadeIn">
+            <h1 class="page-title">Join Our Volunteer Team</h1>
+            <p class="page-subtitle">Make a difference in disaster response and recovery efforts</p>
+        </div>
+        
+        <!-- Volunteer Opportunities Section -->
+        <section class="volunteer-section animate__animated animate__fadeInUp">
+            <h2 class="section-title">
+                <i class="fas fa-hands-helping"></i> Volunteer Opportunities
+            </h2>
+            <div class="section-content">
+                <p class="section-text">
+                    Relief Tracker relies on dedicated volunteers to help us respond to disasters quickly and effectively. Whether you're on the front lines or supporting remotely, your skills can save lives. <span class="highlight">No prior experience is required</span> for many roles - we provide comprehensive training to all volunteers.
+                </p>
+                
+                <div class="roles-grid">
+                    <div class="role-card">
+                        <div class="role-icon">
+                            <i class="fas fa-medkit"></i>
+                        </div>
+                        <h3 class="role-title">Medical Responder</h3>
+                        <p class="role-description">
+                            Provide emergency medical care in disaster zones. Roles available for all certification levels from first aid to licensed medical professionals.
+                        </p>
+                        <div class="role-requirements">
+                            <div class="requirements-title">Requirements:</div>
+                            <ul class="requirements-list">
+                                <li>Medical certification (for professional roles)</li>
+                                <li>Ability to work in high-stress environments</li>
+                                <li>18+ years old</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-icon">
+                            <i class="fas fa-people-arrows"></i>
+                        </div>
+                        <h3 class="role-title">Field Coordinator</h3>
+                        <p class="role-description">
+                            Help organize relief efforts on the ground, manage supplies, and coordinate between teams and local authorities.
+                        </p>
+                        <div class="role-requirements">
+                            <div class="requirements-title">Requirements:</div>
+                            <ul class="requirements-list">
+                                <li>Strong organizational skills</li>
+                                <li>Leadership experience</li>
+                                <li>Ability to travel</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3 class="role-title">Remote Support</h3>
+                        <p class="role-description">
+                            Assist with logistics, communications, data entry, and other critical functions from anywhere in the world.
+                        </p>
+                        <div class="role-requirements">
+                            <div class="requirements-title">Requirements:</div>
+                            <ul class="requirements-list">
+                                <li>Reliable internet connection</li>
+                                <li>Basic computer skills</li>
+                                <li>4+ hours weekly commitment</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <h3 class="role-title">Translation Specialist</h3>
+                        <p class="role-description">
+                            Provide translation services for affected communities and responders (written or spoken).
+                        </p>
+                        <div class="role-requirements">
+                            <div class="requirements-title">Requirements:</div>
+                            <ul class="requirements-list">
+                                <li>Fluency in 2+ languages</li>
+                                <li>Cultural sensitivity</li>
+                                <li>Availability for on-call shifts</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <h3 class="role-title">Logistics Volunteer</h3>
+                        <p class="role-description">
+                            Help manage and transport supplies, set up distribution centers, and maintain equipment.
+                        </p>
+                        <div class="role-requirements">
+                            <div class="requirements-title">Requirements:</div>
+                            <ul class="requirements-list">
+                                <li>Physical ability to lift 50lbs</li>
+                                <li>Valid driver's license (for some roles)</li>
+                                <li>Flexible schedule</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="role-card">
+                        <div class="role-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="role-title">Community Support</h3>
+                        <p class="role-description">
+                            Provide emotional support, help reunite families, and assist with temporary shelter operations.
+                        </p>
+                        <div class="role-requirements">
+                            <div class="requirements-title">Requirements:</div>
+                            <ul class="requirements-list">
+                                <li>Compassion and empathy</li>
+                                <li>Good communication skills</li>
+                                <li>Background check required</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Volunteer Benefits Section -->
+        <section class="volunteer-section animate__animated animate__fadeInUp">
+            <h2 class="section-title">
+                <i class="fas fa-star"></i> Volunteer Benefits
+            </h2>
+            <div class="section-content">
+                <p class="section-text">
+                    While our volunteers don't receive monetary compensation, we offer many valuable benefits and opportunities for personal and professional growth:
+                </p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="benefit-title">Free Training</h3>
+                        <p class="benefit-description">
+                            Receive certified training in disaster response, first aid, crisis communication, and more.
+                        </p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="benefit-title">Global Network</h3>
+                        <p class="benefit-description">
+                            Connect with professionals and volunteers around the world in our exclusive network.
+                        </p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3 class="benefit-title">Certification</h3>
+                        <p class="benefit-description">
+                            Earn recognized certifications that can boost your career and academic credentials.
+                        </p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="benefit-title">Career Development</h3>
+                        <p class="benefit-description">
+                            Gain valuable experience and references for future employment or academic applications.
+                        </p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="benefit-title">Community</h3>
+                        <p class="benefit-description">
+                            Join a supportive community of like-minded individuals making a real difference.
+                        </p>
+                    </div>
+                    
+                    <div class="benefit-card">
+                        <div class="benefit-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h3 class="benefit-title">Travel Opportunities</h3>
+                        <p class="benefit-description">
+                            Qualified volunteers may be invited to join international response teams (expenses covered).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Google Form Application Section -->
+        <section class="volunteer-section animate__animated animate__fadeInUp">
+            <h2 class="section-title">
+                <i class="fas fa-edit"></i> Volunteer Application
+            </h2>
+            <div class="section-content">
+                <p class="section-text">
+                    Ready to join our team? Please complete the form below. Our volunteer coordinator will contact you within 3-5 business days.
+                </p>
+                
+                <div class="google-form-container">
+                    <iframe 
+                        src="https://forms.gle/ewnbhbVHji3rrGPx8" 
+                        width="100%" 
+                        height="1200" 
+                        frameborder="0" 
+                        marginheight="0" 
+                        marginwidth="0"
+                        onload="adjustIframeHeight(this)"
+                    >Loading…</iframe>
+                </div>
+                
+                <p class="section-text" style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.8;">
+                    <i class="fas fa-info-circle"></i> Having trouble with the form? 
+                    <a href="https://forms.gle/ewnbhbVHji3rrGPx8" target="_blank">Open it in a new tab</a>.
+                </p>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="volunteer-section animate__animated animate__fadeInUp">
+            <h2 class="section-title">
+                <i class="fas fa-question-circle"></i> Volunteer FAQ
+            </h2>
+            <div class="section-content">
+                <div class="faq-item">
+                    <div class="faq-question">What is the time commitment for volunteers?</div>
+                    <div class="faq-answer">
+                        <p>Most roles require a minimum commitment of 8 hours per month, though this varies by position. Crisis response volunteers may need to be available for extended shifts during active disasters. Remote support roles often have more flexible scheduling.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do I need prior experience to volunteer?</div>
+                    <div class="faq-answer">
+                        <p>While some specialized roles require specific qualifications, many positions are open to volunteers with no prior experience. We provide comprehensive training for all volunteers based on their role and skill level.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Are there age restrictions for volunteers?</div>
+                    <div class="faq-answer">
+                        <p>Most field positions require volunteers to be at least 18 years old. Some remote support roles may be available to younger volunteers with parental consent. Senior volunteers are welcome and valued!</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Will I need to travel as a volunteer?</div>
+                    <div class="faq-answer">
+                        <p>Only if you choose to! Many roles are location-specific or can be done remotely. For those interested in deployment, we offer opportunities to join response teams both domestically and internationally (travel expenses covered).</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How quickly can I start volunteering after applying?</div>
+                    <div class="faq-answer">
+                        <p>The onboarding process typically takes 2-4 weeks, depending on the role and required training. Some crisis response positions may have accelerated onboarding during active disasters.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <a href="index.html">
+                        <img src="images/Logo.png" alt="Relief Tracker Logo" class="footer-logo-img">
+                        <span class="footer-logo-text">Relief Tracker</span>
+                    </a>
+                </div>
+                <p class="footer-description">
+                    A comprehensive disaster management platform connecting communities with responders for faster, more effective relief efforts.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-column-title">Quick Links</h3>
+                <ul class="footer-links-list">
+                    <li class="footer-link"><a href="about.html">About Us</a></li>
+                    <li class="footer-link"><a href="volunteer.html">Volunteer Opportunities</a></li>
+                    <li class="footer-link"><a href="donate.html">Donate Resources</a></li>
+                    <li class="footer-link"><a href="training.html">Responder Training</a></li>
+                    <li class="footer-link"><a href="blog.html">Disaster Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-column-title">Resources</h3>
+                <ul class="footer-links-list">
+                    <li class="footer-link"><a href="safety.html">Safety Guidelines</a></li>
+                    <li class="footer-link"><a href="preparedness.html">Preparedness Checklist</a></li>
+                    <li class="footer-link"><a href="faq.html">FAQ</a></li>
+                    <li class="footer-link"><a href="glossary.html">Disaster Glossary</a></li>
+                    <li class="footer-link"><a href="reports.html">Annual Reports</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-column-title">Legal</h3>
+                <ul class="footer-links-list">
+                    <li class="footer-link"><a href="privacy.html">Privacy Policy</a></li>
+                    <li class="footer-link"><a href="terms.html">Terms of Service</a></li>
+                    <li class="footer-link"><a href="cookies.html">Cookie Policy</a></li>
+                    <li class="footer-link"><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Relief Tracker. All rights reserved. | Disaster Management System</p>
+        </div>
+    </footer>
+
+    <!-- Emergency Modal -->
+    <div id="emergencyModal" class="emergency-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            
+            <h2 class="modal-title">
+                <i class="fas fa-exclamation-triangle"></i> Emergency Assistance
+            </h2>
+            
+            <div id="callStatus" class="call-status status-connecting">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Connecting to emergency services...</span>
+            </div>
+            
+            <div class="emergency-number-display">
+                <i class="fas fa-phone"></i> +1 (123) 456-7890
+            </div>
+            
+            <div class="emergency-options">
+                <button id="callNowBtn" class="option-btn option-btn-primary">
+                    <i class="fas fa-phone"></i>
+                    <span>CALL NOW</span>
+                </button>
+                
+                <button id="requestCallbackBtn" class="option-btn">
+                    <i class="fas fa-phone-volume"></i>
+                    <span>Request Callback</span>
+                </button>
+                
+                <button id="smsHelpBtn" class="option-btn">
+                    <i class="fas fa-sms"></i>
+                    <span>Text HELP</span>
+                </button>
+                
+                <button id="whatsappBtn" class="option-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </button>
+                
+                <button id="local911Btn" class="option-btn">
+                    <i class="fas fa-ambulance"></i>
+                    <span>Local Emergency</span>
+                </button>
+            </div>
+            
+            <p class="modal-note">
+                <i class="fas fa-info-circle"></i> For immediate life-threatening emergencies, call local 911 first.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const emergencyBtn = document.getElementById('emergencyBtn');
+        const emergencyModal = document.getElementById('emergencyModal');
+        const closeModal = document.getElementById('closeModal');
+        const callStatus = document.getElementById('callStatus');
+        const callNowBtn = document.getElementById('callNowBtn');
+        
+        // Device detection
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        // Emergency Button Click Handler
+        emergencyBtn.addEventListener('click', function(e) {
+            if(isMobile) {
+                // On mobile, let default tel: link handle the call
+                return true;
+            } else {
+                // On desktop, show modal
+                e.preventDefault();
+                emergencyModal.classList.add('active');
+                
+                // Simulate connection status
+                setTimeout(() => {
+                    callStatus.innerHTML = `
+                        <i class="fas fa-check-circle"></i>
+                        <span>Emergency line ready - call now or choose another option</span>
+                    `;
+                    callStatus.classList.remove('status-connecting');
+                    callStatus.classList.add('status-connected');
+                }, 1500);
+            }
+        });
+        
+        // Close Modal
+        closeModal.addEventListener('click', function() {
+            emergencyModal.classList.remove('active');
+        });
+        
+        // Close modal when clicking outside
+        emergencyModal.addEventListener('click', function(e) {
+            if(e.target === emergencyModal) {
+                emergencyModal.classList.remove('active');
+            }
+        });
+        
+        // Call Now Button
+        callNowBtn.addEventListener('click', function() {
+            // In production, this would initiate a WebRTC call
+            alert("In production: Would connect to emergency services via WebRTC");
+        });
+        
+        // Other Option Buttons
+        document.getElementById('requestCallbackBtn').addEventListener('click', function() {
+            alert("Callback request would be sent to emergency team");
+        });
+        
+        document.getElementById('smsHelpBtn').addEventListener('click', function() {
+            window.location.href = 'sms:+11234567890?body=HELP';
+        });
+        
+        document.getElementById('whatsappBtn').addEventListener('click', function() {
+            window.open('https://wa.me/11234567890?text=Emergency%20assistance%20needed');
+        });
+        
+        document.getElementById('local911Btn').addEventListener('click', function() {
+            alert("Would show local emergency numbers based on user's location");
+        });
+        
+        // Update Call Status Badge
+        function updateCallStatus() {
+            const statuses = [
+                {text: "LIVE", color: "#4CAF50"},
+                {text: "HIGH VOLUME", color: "#FF9800"},
+                {text: "2 MIN WAIT", color: "#FF9800"}
+            ];
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            document.getElementById('callStatusBadge').innerHTML = `
+                <i class="fas fa-circle" style="color: ${randomStatus.color}; font-size: 0.6em;"></i>
+                ${randomStatus.text}
+            `;
+        }
+        
+        // Initialize status updates every 30 seconds
+        updateCallStatus();
+        setInterval(updateCallStatus, 30000);
+        
+        // Button click animation
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.target.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    e.target.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // FAQ Toggle Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    if (q !== question) {
+                        q.classList.remove('active');
+                        q.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+                
+                // Toggle current FAQ
+                if (isActive) {
+                    question.classList.remove('active');
+                    answer.style.maxHeight = null;
+                } else {
+                    question.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // Google Form Iframe Height Adjustment
+        function adjustIframeHeight(iframe) {
+            try {
+                iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+            } catch (e) {
+                console.log("Error adjusting iframe height:", e);
+            }
+        }
+
+        // Auto-resize on window resize
+        window.addEventListener('resize', function() {
+            const iframe = document.querySelector('.google-form-container iframe');
+            if (iframe) adjustIframeHeight(iframe);
+        });
+
+        // Animate sections when they come into view
+        const animateOnScroll = () => {
+            const sections = document.querySelectorAll('.volunteer-section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        };
+
+        // Add scroll event listener
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Run once on page load
+        animateOnScroll();
+    </script>
+</body>
+</html>
