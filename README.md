@@ -1,4 +1,4 @@
-![Disaster Management](https://github.com/user-attachments/assets/15a425f6-7e0a-4827-9698-235ea72cefaa)
+![Relief Tracker Banner](https://github.com/user-attachments/assets/2e590377-7c08-40d2-87fd-f1f5da088855)
 
 # ReliefTracker – Disaster Relief Management System 🚑🌍
 ReliefTracker is a web-based disaster management platform that connects affected individuals with relief organizations through efficient request tracking and resource allocation.
@@ -39,14 +39,6 @@ CRUD operations via PHP simulation
 
 ## Screenshots
 
-![1](https://github.com/user-attachments/assets/7c7fb8c8-16d3-44e5-8391-ea925bb3bb48)
-
-![2](https://github.com/user-attachments/assets/47540b5e-e966-4ba2-8a7e-50f7983469b8)
-
-![3](https://github.com/user-attachments/assets/ca6c2671-fec6-4df9-a403-7d28d64ad2ad)
-
-![4](https://github.com/user-attachments/assets/cf115401-75ef-4724-aaf7-a12f2e3c6848)
-
-![5](https://github.com/user-attachments/assets/5c33bc0c-4a0f-4716-8767-16aad4d30360)
-
-![6](https://github.com/user-attachments/assets/a0c6b39f-0bfb-436e-b7c3-a4834d3230ce)
+![Loading Page](https://github.com/user-attachments/assets/1bbe1b61-8566-4320-b22c-d9fd126d54d7)
+![Home Page](https://github.com/user-attachments/assets/6eca6d51-7654-452f-8974-933a7e75da03)
+![Volunteer Page](https://github.com/user-attachments/assets/72613b5d-cf34-4e60-b9fc-f84962525d79)
